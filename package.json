@@ -12,6 +12,7 @@
     "@types/webpack": "^5.28.0",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "autoprefixer": "^10.3.4",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
@@ -28,15 +29,20 @@
     "eslint-plugin-unused-imports": "^1.1.4",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
+    "husky": "^7.0.2",
     "mini-css-extract-plugin": "^2.2.2",
     "node-sass": "^6.0.1",
     "postcss": "^8.3.6",
-    "postcss-cssnext": "^3.1.0",
-    "postcss-import": "^14.0.2",
     "postcss-loader": "^6.1.1",
+    "postcss-normalize": "^10.0.0",
+    "postcss-scss": "^4.0.0",
     "prettier": "^2.3.2",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-no-unsupported-browser-features": "^5.0.1",
+    "stylelint-prettier": "^1.2.0",
     "sugarss": "^4.0.1",
     "ts-loader": "^9.2.5",
     "ts-node": "^10.2.1",
@@ -54,6 +60,11 @@
   "scripts": {
     "start": "webpack serve --mode=development --progress",
     "build": "webpack",
-    "build:prod": "webpack --config webpack.config.prod.ts"
+    "build:prod": "webpack --config webpack.config.prod.ts",
+    "lint-ts": "./node_modules/.bin/tsc --skipLibCheck --noEmit",
+    "lint-es": "./node_modules/.bin/eslint --cache ./src",
+    "lint-styles": "./node_modules/.bin/stylelint --cache ./src",
+    "pre-commit": "yarn lint-es && yarn lint-ts && yarn lint-styles",
+    "prepare": "husky install"
   }
 }
