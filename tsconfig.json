@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
+    "rootDir": "./src",
     "target": "ESNext",
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
       "@/*": ["src/*"],
     },                                 
@@ -16,7 +16,7 @@
     "allowJs": true,                                  
     "declaration": true,                              
     "sourceMap": true,                                
-    "outDir": "./",                                   
+    "outDir": "./dist",                                   
     "removeComments": true,                           
     "noEmit": true,                                   
     "forceConsistentCasingInFileNames": true,
