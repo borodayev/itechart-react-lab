@@ -8,7 +8,7 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const config: Configuration & Record<string, unknown> = {
   mode: 'development',
-  entry: './src/index.tsx',
+  entry: './src/client.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle-[fullhash].js'
@@ -49,8 +49,8 @@ const config: Configuration & Record<string, unknown> = {
             options: {}
           },
           'css-loader',
-          'postcss-loader',
-          'sass-loader'
+          'sass-loader',
+          'postcss-loader'
         ]
       }
     ]
