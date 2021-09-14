@@ -65,7 +65,7 @@
     "start": "webpack serve --mode=development --progress",
     "build": "webpack",
     "build:prod": "webpack --config webpack.config.prod.ts",
-    "server": "ts-node ./src/server.ts",
+    "server": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'ts-node src/server.ts'",
     "lint-ts": "./node_modules/.bin/tsc --skipLibCheck --noEmit",
     "lint-es": "./node_modules/.bin/eslint --cache ./src",
     "lint-styles": "./node_modules/.bin/stylelint --cache ./src",
