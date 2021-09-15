@@ -1,18 +1,30 @@
-import { Schema } from 'mongoose';
+import { Types } from 'mongoose';
+import {
+  prop,
+  modelOptions,
+  defaultClasses,
+  getModelForClass
+} from '@typegoose/typegoose';
 import db from '../db';
 
-const ProductSchema = new Schema(
-  {
-    displayName: String,
-    categoryId: Schema.Types.ObjectId,
-    totalRating: Number,
-    price: Number
-  },
-  {
-    timestamps: true
-  }
-);
+@modelOptions({
+  schemaOptions: { collection: 'products' },
+  existingConnection: db.getConnection()
+})
+class ProductClass extends defaultClasses.TimeStamps {
+  @prop({ type: String })
+  public displayName!: string;
 
-const Product = db.getConnection().model('products', ProductSchema);
+  @prop({ type: Types.ObjectId })
+  public categoryId!: Types.ObjectId;
+
+  @prop({ type: Number })
+  public totalRating!: number;
+
+  @prop({ type: Number })
+  public price!: number;
+}
+
+const Product = getModelForClass(ProductClass);
 
 export default Product;

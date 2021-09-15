@@ -1,15 +1,10 @@
-import { Schema } from 'mongoose';
-import db from '../db';
+import { prop, defaultClasses, getModelForClass } from '@typegoose/typegoose';
 
-const CategorySchema = new Schema(
-  {
-    displayName: String
-  },
-  {
-    timestamps: true
-  }
-);
+class CategoryClass extends defaultClasses.TimeStamps {
+  @prop({ type: String })
+  displayName!: string;
+}
 
-const Category = db.getConnection().model('categories', CategorySchema);
+const Category = getModelForClass(CategoryClass);
 
 export default Category;
