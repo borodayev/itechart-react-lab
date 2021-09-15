@@ -8,7 +8,7 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const config: Configuration & Record<string, unknown> = {
   mode: 'development',
-  entry: './src/client.tsx',
+  entry: './src/client/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle-[fullhash].js'
