@@ -10,6 +10,6 @@ const CategorySchema = new Schema(
   }
 );
 
-const CategoryModel = db.getConnection().model('categories', CategorySchema);
+const Category = db.getConnection().model('categories', CategorySchema);
 
-export default CategoryModel;
+export default Category;

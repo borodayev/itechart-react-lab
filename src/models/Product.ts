@@ -13,6 +13,6 @@ const ProductSchema = new Schema(
   }
 );
 
-const ProductModel = db.getConnection().model('products', ProductSchema);
+const Product = db.getConnection().model('products', ProductSchema);
 
-export default ProductModel;
+export default Product;
