@@ -1,10 +1,19 @@
 import express, { Application } from 'express';
 import path from 'path';
+import db from './db';
 
 const PORT = 8090;
 const app: Application = express();
 
 app.use(express.static('dist'));
+
+db.connect()
+  .then(() => {
+    console.log('Connected');
+  })
+  .catch((e) => {
+    console.error(e);
+  });
 
 app.get('/', (_, res) => {
   const rootHtmlPath = path.join(__dirname, '/dist/index.html');
@@ -29,6 +38,10 @@ app.get('/products', (_, res) => {
   ];
 
   res.send(products);
+});
+
+process.on('beforeExit', () => {
+  db.close();
 });
 
 app.listen(PORT, () => console.log(`App is running on ${PORT}.`));
