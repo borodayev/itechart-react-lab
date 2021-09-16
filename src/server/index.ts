@@ -6,8 +6,6 @@ import db from './db';
 const PORT = 8090;
 const app: Application = express();
 
-app.use(express.static('dist'));
-
 db.connect()
   .then(() => {
     console.log('Connected to DB.');
@@ -16,9 +14,10 @@ db.connect()
     console.error(e);
   });
 
+app.use(express.static(path.resolve(__dirname, 'public')));
+
 app.get('/', (_, res) => {
-  const rootHtmlPath = path.join(__dirname, '/dist/index.html');
-  res.sendFile(rootHtmlPath);
+  res.sendFile('public/index.html', { root: __dirname });
 });
 
 app.get('/products', async (_, res) => {

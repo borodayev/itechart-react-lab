@@ -1,16 +1,22 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
 import { Configuration } from 'webpack';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
-const config: Configuration & Record<string, unknown> = {
-  mode: 'development',
+type Env = {
+  production: boolean;
+};
+
+const clientConfiguration = (
+  env: Env
+): Configuration & Record<string, unknown> => ({
+  mode: env.production ? 'production' : 'development',
   entry: './src/client/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/public'),
     filename: 'bundle-[fullhash].js'
   },
   target: ['web', 'es2015'],
@@ -25,7 +31,7 @@ const config: Configuration & Record<string, unknown> = {
     liveReload: true,
     compress: true,
     port: 3000,
-    hot: false
+    hot: true
   },
   module: {
     rules: [
@@ -71,6 +77,6 @@ const config: Configuration & Record<string, unknown> = {
       filename: 'style-[fullhash].css'
     })
   ]
-};
+});
 
-export default config;
+export default clientConfiguration;
