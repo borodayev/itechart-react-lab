@@ -1,12 +1,12 @@
 import express, { Application } from 'express';
 import path from 'path';
 import Product from './models/Product';
-import db from './db';
+import connection from './databaseConnection';
 
-const PORT = 8090;
 const app: Application = express();
 
-db.connect()
+connection
+  .connect()
   .then(() => {
     console.log('Connected to DB.');
   })
@@ -26,7 +26,9 @@ app.get('/products', async (_, res) => {
 });
 
 process.on('beforeExit', () => {
-  db.close();
+  connection.disconnect();
 });
 
-app.listen(PORT, () => console.log(`App is running on ${PORT}.`));
+app.listen(process.env.PORT, () =>
+  console.log(`App is running on ${process.env.PORT}.`)
+);

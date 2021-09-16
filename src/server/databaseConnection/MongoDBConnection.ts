@@ -1,7 +1,13 @@
-import mongoose, { Connection, ConnectOptions } from 'mongoose';
+import mongoose, {
+  Connection as MongooseConnection,
+  ConnectOptions
+} from 'mongoose';
+import type Connection from './Connection';
 
-export default class DB {
-  private connection: Connection;
+export default class MongoDBConnection
+  implements Connection<MongooseConnection>
+{
+  private connection: MongooseConnection;
 
   private uri: string;
 
@@ -13,11 +19,11 @@ export default class DB {
     this.connection = mongoose.createConnection();
   }
 
-  getConnection(): Connection {
+  get(): MongooseConnection {
     return this.connection;
   }
 
-  connect(): Promise<Connection> {
+  connect(): Promise<MongooseConnection> {
     return new Promise((resolve, reject) => {
       this.connection.once('open', () => {
         resolve(this.connection);
@@ -31,7 +37,7 @@ export default class DB {
     });
   }
 
-  close(): void {
+  disconnect(): void {
     this.connection.close();
   }
 }

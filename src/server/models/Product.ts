@@ -5,11 +5,11 @@ import {
   defaultClasses,
   getModelForClass
 } from '@typegoose/typegoose';
-import db from '../db';
+import connection from '../databaseConnection';
 
 @modelOptions({
   schemaOptions: { collection: 'products' },
-  existingConnection: db.getConnection()
+  existingConnection: connection.get()
 })
 class ProductClass extends defaultClasses.TimeStamps {
   @prop({ type: String })
