@@ -11,6 +11,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "@types/uuid": "^8.3.1",
     "@types/webpack": "^5.28.0",
     "@types/webpack-node-externals": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
@@ -63,12 +64,16 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.5",
+    "pg": "^8.7.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.37",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "client:start": "webpack serve --progress --config ./webpack.config.client.ts",
-    "server:start": "tsnd --watch 'src/server/**' --cls -r dotenv/config src/server/index.ts",
+    "server:start": "tsnd --watch 'src/server/**' -r dotenv/config src/server/index.ts",
     "client:build": "webpack --config ./webpack.config.client.ts --node-env=production",
     "server:build": "webpack --config ./webpack.config.server.ts --node-env=production",
     "build": "yarn server:build && yarn client:build",

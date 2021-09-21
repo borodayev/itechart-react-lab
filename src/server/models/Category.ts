@@ -1,5 +1,13 @@
-import { prop, defaultClasses, getModelForClass } from '@typegoose/typegoose';
+import {
+  prop,
+  defaultClasses,
+  getModelForClass,
+  modelOptions
+} from '@typegoose/typegoose';
 
+@modelOptions({
+  schemaOptions: { collection: 'products' }
+})
 class CategoryClass extends defaultClasses.TimeStamps {
   @prop({ type: String })
   displayName!: string;

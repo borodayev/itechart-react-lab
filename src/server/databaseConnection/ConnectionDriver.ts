@@ -1,5 +1,5 @@
 export default interface Connection<ConnectionType> {
-  get(): ConnectionType;
+  getConnection(): Promise<ConnectionType>;
   connect(): Promise<ConnectionType>;
-  disconnect(): void;
+  disconnect(): Promise<void>;
 }
