@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 @modelOptions({
   schemaOptions: { collection: 'products' }
 })
-export class ProductEntity extends defaultClasses.TimeStamps {
+export class Product extends defaultClasses.TimeStamps {
   @prop({ type: String, default: uuidv4 })
   _id!: string;
 
@@ -27,5 +27,5 @@ export class ProductEntity extends defaultClasses.TimeStamps {
   price!: number;
 }
 
-const ProductTypegooseModel = getModelForClass(ProductEntity);
+const ProductTypegooseModel = getModelForClass(Product);
 export default ProductTypegooseModel;

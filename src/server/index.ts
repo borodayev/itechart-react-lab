@@ -8,7 +8,7 @@ const app: Application = express();
 connectionDriver
   .connect()
   .then(() => {
-    console.log('Connected to DB.');
+    console.log(`Connected to ${process.env.DB_TYPE} database.`);
     app.emit('ready');
   })
   .catch((e) => {

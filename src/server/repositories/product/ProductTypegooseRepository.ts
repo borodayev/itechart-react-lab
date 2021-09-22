@@ -1,12 +1,12 @@
 import type { ReturnModelType } from '@typegoose/typegoose';
-import { ProductEntity } from 'server/models/product/ProductTypegooseModel';
+import { Product } from 'server/models/product/ProductTypegooseModel';
 import ProductDTO from 'server/dtos/ProductDTO';
 import ProductRepository from './ProductRepository';
 
 export default class ProductTypegooseRepository implements ProductRepository {
-  private model: ReturnModelType<typeof ProductEntity>;
+  private model: ReturnModelType<typeof Product>;
 
-  constructor(model: ReturnModelType<typeof ProductEntity>) {
+  constructor(model: ReturnModelType<typeof Product>) {
     this.model = model;
   }
 
@@ -33,7 +33,7 @@ export default class ProductTypegooseRepository implements ProductRepository {
     return this.toDto(product);
   }
 
-  private toDto(product: ProductEntity): ProductDTO {
+  private toDto(product: Product): ProductDTO {
     const { _id, displayName, price, totalRating } = product;
     return { id: _id, displayName, price, totalRating };
   }

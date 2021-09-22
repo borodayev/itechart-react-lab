@@ -1,6 +1,6 @@
 import { Repository, Connection } from 'typeorm';
 import ProductDTO from '../../dtos/ProductDTO';
-import ProductEntity from '../../models/product/ProductTypeOrmModel';
+import ProductEntity from '../../models/product/ProductTypeOrmEntity';
 import ProductRepository from './ProductRepository';
 import connectionDriver from '../../databaseConnection';
 

@@ -5,7 +5,8 @@ import {
   ConnectionManager,
   getConnectionManager
 } from 'typeorm';
-import ProductEntity from '../models/product/ProductTypeOrmModel';
+import ProductEntity from '../models/product/ProductTypeOrmEntity';
+import CategoryEntity from '../models/category/CategoryTypeOrmEntity';
 import ConnectionDriver from './ConnectionDriver';
 
 export default class PostgreSQLConnection
@@ -33,7 +34,7 @@ export default class PostgreSQLConnection
       port: 5432,
       username: 'www',
       password: 'root',
-      entities: [ProductEntity],
+      entities: [ProductEntity, CategoryEntity],
       database: 'itechart',
       synchronize: true,
       logging: true

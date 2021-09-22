@@ -13,6 +13,4 @@ const ProductRepositoryFactory = (dbType: string): ProductRepository => {
   throw new Error(`DB: ${dbType} is not supported`);
 };
 
-const a = ProductRepositoryFactory(process.env.DB_TYPE || '');
-
-export default a;
+export default ProductRepositoryFactory(process.env.DB_TYPE || '');

@@ -72,10 +72,10 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "client:start": "webpack serve --progress --config ./webpack.config.client.ts",
-    "server:start": "tsnd --watch 'src/server/**' -r dotenv/config src/server/index.ts",
-    "client:build": "webpack --config ./webpack.config.client.ts --node-env=production",
-    "server:build": "webpack --config ./webpack.config.server.ts --node-env=production",
+    "start:client": "webpack serve --progress --config ./webpack.config.client.ts",
+    "start:server": "tsnd --watch 'src/server/**' -r dotenv/config src/server/index.ts",
+    "build:client": "webpack --config ./webpack.config.client.ts --node-env=production",
+    "build:server": "webpack --config ./webpack.config.server.ts --node-env=production",
     "build": "yarn server:build && yarn client:build",
     "lint-ts": "./node_modules/.bin/tsc --skipLibCheck --noEmit",
     "lint-es": "./node_modules/.bin/eslint --cache ./src",
