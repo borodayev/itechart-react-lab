@@ -37,7 +37,7 @@ export default class PostgreSQLConnection
       entities: [ProductEntity, CategoryEntity],
       database: 'itechart',
       synchronize: true,
-      logging: true
+      logging: process.env.NODE_ENV !== 'production'
     });
 
     return connection;

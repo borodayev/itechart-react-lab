@@ -1,21 +1,33 @@
 import express, { Application } from 'express';
 import path from 'path';
+import morgan from 'morgan';
 import ProductRepository from './repositories/product';
 import connectionDriver from './databaseConnection';
+import logger from './config/logger';
 
 const app: Application = express();
 
 connectionDriver
   .connect()
   .then(() => {
-    console.log(`Connected to ${process.env.DB_TYPE} database.`);
+    logger.info(`Connected to ${process.env.DB_TYPE} database.`);
     app.emit('ready');
   })
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
   });
 
 app.on('ready', () => {
+  app.use(
+    morgan('tiny', {
+      stream: {
+        write(message: string) {
+          logger.info(message);
+        }
+      }
+    })
+  );
+
   app.use(express.static(path.resolve(__dirname, 'public')));
 
   app.get('/', (_, res) => {
@@ -28,7 +40,7 @@ app.on('ready', () => {
   });
 
   app.listen(process.env.PORT, () =>
-    console.log(`App is running on ${process.env.PORT}.`)
+    logger.info(`App is running on ${process.env.PORT}.`)
   );
 });
 
