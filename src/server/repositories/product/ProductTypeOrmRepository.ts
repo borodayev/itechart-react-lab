@@ -1,7 +1,9 @@
 import { Repository, Connection } from 'typeorm';
 import ProductDTO from '../../dtos/ProductDTO';
 import ProductEntity from '../../models/product/ProductTypeOrmEntity';
-import ProductRepository from './ProductRepository';
+import ProductRepository, {
+  ProductSearchParameters
+} from './ProductRepository';
 import connectionDriver from '../../databaseConnection';
 
 export default class ProductTypeOrmRepository implements ProductRepository {
@@ -31,6 +33,15 @@ export default class ProductTypeOrmRepository implements ProductRepository {
     const product = await repository.findOne({ price });
     if (!product) return null;
     return this.toDto(product);
+  }
+
+  async findAll(
+    searchParameters: ProductSearchParameters
+  ): Promise<ProductDTO[] | []> {
+    console.log(searchParameters);
+    const repository = await this.getRepository();
+    const products = await repository.find({});
+    return products.map(this.toDto);
   }
 
   private toDto(product: ProductEntity): ProductDTO {

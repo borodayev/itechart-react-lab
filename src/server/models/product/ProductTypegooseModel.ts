@@ -3,10 +3,14 @@ import {
   prop,
   modelOptions,
   defaultClasses,
-  getModelForClass
+  getModelForClass,
+  index
 } from '@typegoose/typegoose';
 import { v4 as uuidv4 } from 'uuid';
 
+@index({ displayName: 'text' })
+@index({ totalRating: 1 })
+@index({ price: 1 })
 @modelOptions({
   schemaOptions: { collection: 'products' }
 })
@@ -18,7 +22,7 @@ export class Product extends defaultClasses.TimeStamps {
   displayName!: string;
 
   @prop({ type: Types.ObjectId })
-  categoryId!: Types.ObjectId;
+  categoryIds!: Types.ObjectId[];
 
   @prop({ type: Number })
   totalRating!: number;

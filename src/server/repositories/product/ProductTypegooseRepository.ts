@@ -1,7 +1,10 @@
-import type { ReturnModelType } from '@typegoose/typegoose';
+import type { ReturnModelType, DocumentType } from '@typegoose/typegoose';
 import { Product } from 'server/models/product/ProductTypegooseModel';
 import ProductDTO from 'server/dtos/ProductDTO';
-import ProductRepository from './ProductRepository';
+import { FilterQuery } from 'mongoose';
+import ProductRepository, {
+  ProductSearchParameters
+} from './ProductRepository';
 
 export default class ProductTypegooseRepository implements ProductRepository {
   private model: ReturnModelType<typeof Product>;
@@ -31,6 +34,31 @@ export default class ProductTypegooseRepository implements ProductRepository {
     const product = await this.model.findOne({ price });
     if (!product) return null;
     return this.toDto(product);
+  }
+
+  async findAll(
+    searchParameters: ProductSearchParameters
+  ): Promise<ProductDTO[] | []> {
+    const { displayName, maxPrice, minPrice, sortBy, minRating } =
+      searchParameters;
+    const filter: FilterQuery<DocumentType<Product>> = {
+      ...(displayName && { displayName }),
+      ...(minRating && { totalRating: { $gte: minRating } })
+    };
+
+    if (maxPrice || minPrice) {
+      filter.price = {
+        ...(minPrice && { $gte: minPrice }),
+        ...(maxPrice && { $lte: maxPrice })
+      };
+    }
+
+    const sort = sortBy
+      ? { [sortBy.fieldName]: sortBy.order === 'asc' ? 1 : -1 }
+      : {};
+
+    const products = await this.model.find(filter).sort(sort);
+    return products.map(this.toDto);
   }
 
   private toDto(product: Product): ProductDTO {

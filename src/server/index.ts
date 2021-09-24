@@ -1,8 +1,8 @@
 import express, { Application } from 'express';
 import path from 'path';
 import morgan from 'morgan';
-import ProductRepository from './repositories/product';
 import connectionDriver from './databaseConnection';
+import { ProductRouter } from './routes';
 import logger from './config/logger';
 
 const app: Application = express();
@@ -28,15 +28,12 @@ app.on('ready', () => {
     })
   );
 
+  app.use(express.json());
   app.use(express.static(path.resolve(__dirname, 'public')));
+  app.use('/products', ProductRouter);
 
   app.get('/', (_, res) => {
     res.sendFile('public/index.html', { root: __dirname });
-  });
-
-  app.get('/products', async (_, res) => {
-    const products = await ProductRepository.findByPrice(60);
-    res.send(products);
   });
 
   app.listen(process.env.PORT, () =>
