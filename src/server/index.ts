@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import connectionDriver from './databaseConnection';
-import { ProductRouter } from './routes';
+import setupRoutes from './routes';
 import logger from './config/logger';
 
 const app: Application = express();
@@ -30,11 +30,8 @@ app.on('ready', () => {
 
   app.use(express.json());
   app.use(express.static(path.resolve(__dirname, 'public')));
-  app.use('/products', ProductRouter);
 
-  app.get('/', (_, res) => {
-    res.sendFile('public/index.html', { root: __dirname });
-  });
+  setupRoutes(app);
 
   app.listen(process.env.PORT, () =>
     logger.info(`App is running on ${process.env.PORT}.`)

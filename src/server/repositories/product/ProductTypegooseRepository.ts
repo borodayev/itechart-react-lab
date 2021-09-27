@@ -15,6 +15,11 @@ export default class ProductTypegooseRepository implements ProductRepository {
     this.model = model;
   }
 
+  static toDto(product: Product): ProductDTO {
+    const { _id, displayName, price, totalRating } = product;
+    return { id: _id, displayName, price, totalRating };
+  }
+
   async save(product: ProductDTO): Promise<void> {
     const isExists = await this.exists(product);
     if (isExists) {
@@ -35,7 +40,7 @@ export default class ProductTypegooseRepository implements ProductRepository {
   async findByPrice(price: number): Promise<ProductDTO | null> {
     const product = await this.model.findOne({ price });
     if (!product) return null;
-    return this.toDto(product);
+    return ProductTypegooseRepository.toDto(product);
   }
 
   async findAll(
@@ -75,11 +80,6 @@ export default class ProductTypegooseRepository implements ProductRepository {
     if (page > 1) productsQuery.skip(offset);
 
     const products = await productsQuery;
-    return products.map(this.toDto);
-  }
-
-  private toDto(product: Product): ProductDTO {
-    const { _id, displayName, price, totalRating } = product;
-    return { id: _id, displayName, price, totalRating };
+    return products.map(ProductTypegooseRepository.toDto);
   }
 }

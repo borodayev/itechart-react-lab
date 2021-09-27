@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 @modelOptions({
   schemaOptions: { collection: 'categories' }
 })
-class CategoryClass extends defaultClasses.TimeStamps {
+export class Category extends defaultClasses.TimeStamps {
   @prop({ type: String, default: uuidv4 })
   _id!: string;
 
@@ -17,6 +17,6 @@ class CategoryClass extends defaultClasses.TimeStamps {
   displayName!: string;
 }
 
-const Category = getModelForClass(CategoryClass);
+const CategoryTypegooseModel = getModelForClass(Category);
 
-export default Category;
+export default CategoryTypegooseModel;
