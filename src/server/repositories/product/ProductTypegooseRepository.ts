@@ -9,6 +9,8 @@ import ProductRepository, {
 export default class ProductTypegooseRepository implements ProductRepository {
   private model: ReturnModelType<typeof Product>;
 
+  private PER_PAGE = 3;
+
   constructor(model: ReturnModelType<typeof Product>) {
     this.model = model;
   }
@@ -39,8 +41,14 @@ export default class ProductTypegooseRepository implements ProductRepository {
   async findAll(
     searchParameters: ProductSearchParameters
   ): Promise<ProductDTO[] | []> {
-    const { displayName, maxPrice, minPrice, sortBy, minRating } =
-      searchParameters;
+    const {
+      displayName,
+      maxPrice,
+      minPrice,
+      sortBy,
+      minRating,
+      page = 1
+    } = searchParameters;
     const filter: FilterQuery<DocumentType<Product>> = {
       ...(displayName && { displayName }),
       ...(minRating && { totalRating: { $gte: minRating } })
@@ -57,7 +65,16 @@ export default class ProductTypegooseRepository implements ProductRepository {
       ? { [sortBy.fieldName]: sortBy.order === 'asc' ? 1 : -1 }
       : {};
 
-    const products = await this.model.find(filter).sort(sort);
+    const offset = page * this.PER_PAGE;
+
+    const productsQuery = this.model
+      .find(filter)
+      .sort(sort)
+      .limit(this.PER_PAGE);
+
+    if (page > 1) productsQuery.skip(offset);
+
+    const products = await productsQuery;
     return products.map(this.toDto);
   }
 

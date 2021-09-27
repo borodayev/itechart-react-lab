@@ -8,7 +8,7 @@ const parseGetParameters = (
   res: Response,
   next: NextFunction
 ) => {
-  const { displayName, minRating, price, sortBy } = req.query;
+  const { displayName, minRating, price, sortBy, page } = req.query;
   const parsedParameters: Record<string, unknown> = {};
   try {
     if (displayName) {
@@ -30,6 +30,10 @@ const parseGetParameters = (
     if (sortBy) {
       const [fieldName, order] = sortBy.toString().split(':');
       if (fieldName && order) parsedParameters.sortBy = { fieldName, order };
+    }
+
+    if (page) {
+      parsedParameters.page = parseInt(page.toString(), 10);
     }
 
     res.locals.parsedParameters = parsedParameters;

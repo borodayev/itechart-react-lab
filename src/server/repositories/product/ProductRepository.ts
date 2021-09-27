@@ -10,6 +10,7 @@ export type ProductSearchParameters = {
     fieldName: string;
     order: string;
   };
+  page: number;
 };
 
 export default interface ProductRepository extends BaseRepository<ProductDTO> {
